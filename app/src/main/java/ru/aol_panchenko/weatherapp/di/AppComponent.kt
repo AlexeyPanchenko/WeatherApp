@@ -1,7 +1,7 @@
 package ru.aol_panchenko.weatherapp.di
 
 import dagger.Component
-import ru.aol_panchenko.weatherapp.presentation.MainActivity
+import ru.aol_panchenko.weatherapp.presentation.main_screen.MainActivity
 import javax.inject.Singleton
 
 /**

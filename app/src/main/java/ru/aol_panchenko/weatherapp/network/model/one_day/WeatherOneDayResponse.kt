@@ -3,5 +3,5 @@ package ru.aol_panchenko.weatherapp.network.model.one_day
 /**
  * Created by Panchenko.AO on 18.09.2017.
  */
-class WeatherOneDayResponse(coord: CoordResponse, weather: WeatherResponse, main: MainReaponse,
-                            wind: WindResponse, clouds: CloudResponse, rain: RainResponse, val code: Int)
+class WeatherOneDayResponse(val coord: CoordResponse?, val weather: WeatherResponse?, val main: MainResponse?,
+                            val wind: WindResponse?, val clouds: CloudResponse?, val rain: RainResponse?, val code: Int)

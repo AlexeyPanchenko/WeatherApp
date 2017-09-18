@@ -5,4 +5,4 @@ import com.google.gson.annotations.SerializedName
 /**
  * Created by alexey on 18.09.17.
  */
-class WeatherResponse(@SerializedName("main") val type: String, description: String, icon: String)
+class WeatherResponse(@SerializedName("main") val type: String?, val description: String?, val icon: String?)

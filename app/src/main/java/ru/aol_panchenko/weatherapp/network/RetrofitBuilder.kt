@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.aol_panchenko.weatherapp.BASE_URL
 import ru.aol_panchenko.weatherapp.BuildConfig
 import ru.aol_panchenko.weatherapp.HTTP_TIMEOUT_MILLIS
-import ru.aol_panchenko.weatherapp.network.model.one_day.WeatherOneDayReaponseTypeAdapter
+import ru.aol_panchenko.weatherapp.network.model.one_day.WeatherOneDayResponseTypeAdapter
 import java.util.concurrent.TimeUnit
 
 /**
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 class RetrofitBuilder {
 
     companion object {
-        fun create(): ApiWeather? {
+        fun create(): ApiWeather {
             val retrofit = Retrofit.Builder()
                     .baseUrl(BASE_URL)
                     .client(getClient())
@@ -31,7 +31,7 @@ class RetrofitBuilder {
 
         private fun getGson(): Gson? {
             var gsonBuilder = GsonBuilder()
-            gsonBuilder = WeatherOneDayReaponseTypeAdapter.register(gsonBuilder)
+            gsonBuilder = WeatherOneDayResponseTypeAdapter.register(gsonBuilder)
             return gsonBuilder.create()
         }
 

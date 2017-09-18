@@ -6,7 +6,7 @@ import java.lang.reflect.Type
 /**
  * Created by Panchenko.AO on 18.09.2017.
  */
-class WeatherOneDayReaponseTypeAdapter : JsonDeserializer<WeatherOneDayResponse> {
+class WeatherOneDayResponseTypeAdapter : JsonDeserializer<WeatherOneDayResponse> {
 
     private val JSON_COORD = "coord"
     private val JSON_WEATHER = "weather"
@@ -16,13 +16,12 @@ class WeatherOneDayReaponseTypeAdapter : JsonDeserializer<WeatherOneDayResponse>
     private val JSON_RAIN = "rain"
     private val JSON_CODE = "cod"
 
-
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): WeatherOneDayResponse {
         val responseObj = json?.asJsonObject
 
         val coord = extractObjectFromJsonObject<CoordResponse>(responseObj?.getAsJsonObject(JSON_COORD))
         val weather = extractObjectFromJsonObject<WeatherResponse>(responseObj?.getAsJsonArray(JSON_WEATHER)!![0])
-        val main = extractObjectFromJsonObject<MainReaponse>(responseObj.getAsJsonObject(JSON_MAIN))
+        val main = extractObjectFromJsonObject<MainResponse>(responseObj.getAsJsonObject(JSON_MAIN))
         val wind = extractObjectFromJsonObject<WindResponse>(responseObj.getAsJsonObject(JSON_WIND))
         val clouds = extractObjectFromJsonObject<CloudResponse>(responseObj.getAsJsonObject(JSON_CLOUDS))
         val rain = extractObjectFromJsonObject<RainResponse>(responseObj.getAsJsonObject(JSON_RAIN))
@@ -35,6 +34,6 @@ class WeatherOneDayReaponseTypeAdapter : JsonDeserializer<WeatherOneDayResponse>
 
     companion object {
         fun register(builder: GsonBuilder): GsonBuilder =
-                builder.registerTypeAdapter(WeatherOneDayResponse::class.java, WeatherOneDayReaponseTypeAdapter())
+                builder.registerTypeAdapter(WeatherOneDayResponse::class.java, WeatherOneDayResponseTypeAdapter())
     }
 }
