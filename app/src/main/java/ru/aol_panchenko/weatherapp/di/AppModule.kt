@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import ru.aol_panchenko.weatherapp.WeatherApplication
 import ru.aol_panchenko.weatherapp.network.RetrofitBuilder
+import ru.aol_panchenko.weatherapp.repository.OneDayRepository
 import javax.inject.Singleton
 
 /**
@@ -19,4 +20,8 @@ class AppModule(private val application: WeatherApplication) {
     @Provides
     @Singleton
     fun provideRetrofitApi() = RetrofitBuilder.create()
+
+    @Provides
+    @Singleton
+    fun provideOneWeatherRepository() = OneDayRepository()
 }

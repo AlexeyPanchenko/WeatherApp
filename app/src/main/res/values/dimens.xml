@@ -1,3 +1,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="card_view_radius">5dp</dimen>
+
+    <dimen name="weather_list_padding">8dp</dimen>
+    <dimen name="weather_list_image_size">48dp</dimen>
+    <dimen name="weather_list_city_title_size">18sp</dimen>
 </resources>

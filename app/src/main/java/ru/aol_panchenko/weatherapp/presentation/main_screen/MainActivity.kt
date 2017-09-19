@@ -17,14 +17,13 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var _api: ApiWeather
     private var _pageAdapter: WeatherPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        WeatherApplication.appComponent.inject(this)
+        title = ""
 
         _pageAdapter = WeatherPagerAdapter(supportFragmentManager)
         vpContainerFragment.adapter = _pageAdapter
@@ -34,15 +33,6 @@ class MainActivity : AppCompatActivity() {
             AddCityDialog.show(supportFragmentManager)
         }
 
-        _api.getWeatherOneDayByCityName("Владивосток", apiKey = getString(R.string.weather_api_key))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { responseToString(it) }
-
-    }
-
-    private fun responseToString(response: WeatherOneDayResponse) {
-        Log.d("TTT", "QQQ = ${response.weather?.description}")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

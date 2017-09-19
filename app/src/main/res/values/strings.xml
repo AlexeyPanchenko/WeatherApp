@@ -6,4 +6,7 @@
     <string name="add_city_title">Выбор города</string>
     <string name="add_city_button_save">Сохранить</string>
     <string name="add_city_button_cancel">Отмена</string>
+    <string name="error_text">Ошибка</string>
+    <string name="error_description">Извините, что то пошло не так</string>
+    <string name="button_retry_text">Повторить попытку</string>
 </resources>
