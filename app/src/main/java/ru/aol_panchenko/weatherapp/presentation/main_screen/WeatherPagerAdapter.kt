@@ -1,7 +1,9 @@
 package ru.aol_panchenko.weatherapp.presentation.main_screen
 
+import android.content.Context
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import ru.aol_panchenko.weatherapp.R
 import ru.aol_panchenko.weatherapp.presentation.main_screen.five_days.FiveDaysFragment
 import ru.aol_panchenko.weatherapp.presentation.main_screen.one_day.OneDayFragment
 import ru.aol_panchenko.weatherapp.presentation.main_screen.sixteen_days.SixteenDaysFragment
@@ -9,7 +11,7 @@ import ru.aol_panchenko.weatherapp.presentation.main_screen.sixteen_days.Sixteen
 /**
  * Created by alexey on 19.09.17.
  */
-class WeatherPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class WeatherPagerAdapter(fragmentManager: FragmentManager, private val _context: Context) : FragmentPagerAdapter(fragmentManager) {
 
     val ONE_DAY_FRAGMENT = 0
     val FIVE_DAYS_FRAGMENT = 1
@@ -23,9 +25,9 @@ class WeatherPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapt
     }
 
     override fun getPageTitle(position: Int) = when(position) {
-        ONE_DAY_FRAGMENT -> "Сегодня"
-        FIVE_DAYS_FRAGMENT -> "5 дней"
-        SIXTEEN_DAYS_FRAGMENT -> "16 дней"
+        ONE_DAY_FRAGMENT -> _context.getString(R.string.today_title)
+        FIVE_DAYS_FRAGMENT -> _context.getString(R.string.fie_days_title)
+        SIXTEEN_DAYS_FRAGMENT -> _context.getString(R.string.sixteen_days_title)
         else -> throw IllegalStateException("impossible")
     }
 

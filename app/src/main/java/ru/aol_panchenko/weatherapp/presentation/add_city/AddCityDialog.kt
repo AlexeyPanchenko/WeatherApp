@@ -2,6 +2,7 @@ package ru.aol_panchenko.weatherapp.presentation.add_city
 
 
 import android.app.Dialog
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
@@ -29,7 +30,7 @@ class AddCityDialog : DialogFragment(), AddCityMVPView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _presenter = AddCityPresenter(this)
+        _presenter = AddCityPresenter(this, ViewModelProviders.of(activity).get(AddCityViewModel::class.java))
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

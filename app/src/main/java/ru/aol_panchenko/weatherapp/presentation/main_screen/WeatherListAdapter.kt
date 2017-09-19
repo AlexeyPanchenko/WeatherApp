@@ -20,6 +20,12 @@ class WeatherListAdapter(private val _context: Context) : RecyclerView.Adapter<W
         notifyDataSetChanged()
     }
 
+    fun addItem(item: WeatherOneDayResponse) {
+        val position = itemCount
+        (_weatherList as ArrayList).add(item)
+        notifyItemInserted(position)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): WeatherVH {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.weather_list_item, null)
         return WeatherVH(view)

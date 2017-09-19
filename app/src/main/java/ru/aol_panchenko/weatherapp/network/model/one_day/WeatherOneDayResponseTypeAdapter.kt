@@ -14,6 +14,7 @@ class WeatherOneDayResponseTypeAdapter : JsonDeserializer<WeatherOneDayResponse>
     private val JSON_WIND = "wind"
     private val JSON_CLOUDS = "clouds"
     private val JSON_RAIN = "rain"
+    private val JSON_SNOW = "snow"
     private val JSON_CODE = "cod"
 
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): WeatherOneDayResponse {
@@ -25,12 +26,14 @@ class WeatherOneDayResponseTypeAdapter : JsonDeserializer<WeatherOneDayResponse>
         val wind = extractObjectFromJsonObject<WindResponse>(responseObj.getAsJsonObject(JSON_WIND))
         val clouds = extractObjectFromJsonObject<CloudResponse>(responseObj.getAsJsonObject(JSON_CLOUDS))
         val rain = extractObjectFromJsonObject<RainResponse>(responseObj.getAsJsonObject(JSON_RAIN))
+        val snow = extractObjectFromJsonObject<SnowResponse>(responseObj.getAsJsonObject(JSON_SNOW))
         val code = responseObj.getAsJsonPrimitive(JSON_CODE).asInt
 
-        return WeatherOneDayResponse(coord, weather, main, wind, clouds, rain, code)
+        return WeatherOneDayResponse(coord, weather, main, wind, clouds, rain, snow, code)
     }
 
-    private inline fun <reified T> extractObjectFromJsonObject(json: JsonElement?) = Gson().fromJson(json, T::class.java)
+    private inline fun <reified T> extractObjectFromJsonObject(json: JsonElement?) =
+            Gson().fromJson(json, T::class.java)
 
     companion object {
         fun register(builder: GsonBuilder): GsonBuilder =

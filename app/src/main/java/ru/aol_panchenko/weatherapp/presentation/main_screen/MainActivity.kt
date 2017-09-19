@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         title = ""
 
-        _pageAdapter = WeatherPagerAdapter(supportFragmentManager)
+        _pageAdapter = WeatherPagerAdapter(supportFragmentManager, this)
         vpContainerFragment.adapter = _pageAdapter
         tlWeatherVariety.setupWithViewPager(vpContainerFragment)
 

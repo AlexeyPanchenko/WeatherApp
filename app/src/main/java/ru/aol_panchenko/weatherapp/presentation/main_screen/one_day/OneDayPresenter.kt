@@ -5,6 +5,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import ru.aol_panchenko.weatherapp.WeatherApplication
 import ru.aol_panchenko.weatherapp.network.model.one_day.WeatherOneDayResponse
+import ru.aol_panchenko.weatherapp.presentation.add_city.AddCityViewModel
 import ru.aol_panchenko.weatherapp.repository.OneDayRepository
 import ru.aol_panchenko.weatherapp.utils.unsubscribe
 import javax.inject.Inject
@@ -12,7 +13,7 @@ import javax.inject.Inject
 /**
  * Created by Panchenko.AO on 19.09.2017.
  */
-class OneDayPresenter(private val _mvpView: OneDayMVPView) {
+class OneDayPresenter(private val _mvpView: OneDayMVPView, private val _viewModel: AddCityViewModel) {
 
     @Inject lateinit var _repository: OneDayRepository
 
@@ -20,10 +21,10 @@ class OneDayPresenter(private val _mvpView: OneDayMVPView) {
 
     init {
         WeatherApplication.appComponent.inject(this)
-        loadWeather("Владивосток", _mvpView.getApiKey())
+        //loadCityWeather(_viewModel.cityName.value!!, _mvpView.getApiKey())
     }
 
-    private fun loadWeather(cityName: String, apiKey: String) {
+    fun loadCityWeather(cityName: String, apiKey: String) {
         unsubscribe(_loadWeatherDisposable)
         _loadWeatherDisposable = _repository.getWeatherOneDayByCityName(cityName, apiKey)
                 .subscribeOn(Schedulers.io())

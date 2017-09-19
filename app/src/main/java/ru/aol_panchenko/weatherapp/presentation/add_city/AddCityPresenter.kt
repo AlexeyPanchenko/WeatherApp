@@ -1,15 +1,12 @@
 package ru.aol_panchenko.weatherapp.presentation.add_city
 
-import android.util.Log
-
 /**
  * Created by alexey on 17.09.17.
  */
-class AddCityPresenter(private val _mvpView: AddCityMVPView) {
+class AddCityPresenter(private val _mvpView: AddCityMVPView, private val _viewModel: AddCityViewModel) {
 
     fun onSaveClick() {
-        val cityName = _mvpView.getCityName()
-        Log.d("TTT", cityName)
+        _viewModel.cityName.value = _mvpView.getCityName()
         _mvpView.closeDialog()
     }
 

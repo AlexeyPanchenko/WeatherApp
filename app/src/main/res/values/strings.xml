@@ -9,4 +9,18 @@
     <string name="error_text">Ошибка</string>
     <string name="error_description">Извините, что то пошло не так</string>
     <string name="button_retry_text">Повторить попытку</string>
+    <string name="today_title">Сегодня</string>
+    <string name="fie_days_title">5 дней</string>
+    <string name="sixteen_days_title">16 дней</string>
+    
+    <string name="weather_description_200">Гроза с легким дождем</string>
+    <string name="weather_description_201">Гроза с дождем</string>
+    <string name="weather_description_202">Гроза с сильным дождем</string>
+    <string name="weather_description_210">Легкая гроза</string>
+    <string name="weather_description_211">Гроза</string>
+    <string name="weather_description_212">Сильная гроза</string>
+    <string name="weather_description_221">Прерывистая гроза</string>
+    <string name="weather_description_230">Гроза с легкой моросью</string>
+    <string name="weather_description_231">Гроза с моросью</string>
+    <string name="weather_description_232">Гроза с сильной моросью</string>
 </resources>
