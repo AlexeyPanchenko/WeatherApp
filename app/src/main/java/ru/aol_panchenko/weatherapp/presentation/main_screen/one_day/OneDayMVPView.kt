@@ -10,4 +10,7 @@ interface OneDayMVPView {
     fun addWeather(response: Weather)
     fun showProgressState()
     fun showContentState()
+    fun showEmptyState()
+    fun setWeatherList(weathers: List<Weather>)
+    fun clearList()
 }

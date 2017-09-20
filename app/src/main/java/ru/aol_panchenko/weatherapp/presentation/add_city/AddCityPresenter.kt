@@ -6,7 +6,7 @@ package ru.aol_panchenko.weatherapp.presentation.add_city
 class AddCityPresenter(private val _mvpView: AddCityMVPView, private val _viewModel: AddCityViewModel) {
 
     fun onSaveClick() {
-        _viewModel.cityName.value = _mvpView.getCityName()
+        _viewModel.cityName.value = _mvpView.getCityName().trim()
         _mvpView.closeDialog()
     }
 

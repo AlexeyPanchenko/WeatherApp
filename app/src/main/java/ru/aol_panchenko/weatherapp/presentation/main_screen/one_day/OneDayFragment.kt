@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.error_state.*
 import kotlinx.android.synthetic.main.weather_list_fragment.*
+import org.jetbrains.anko.support.v4.onRefresh
 import ru.aol_panchenko.weatherapp.R
 import ru.aol_panchenko.weatherapp.presentation.add_city.AddCityViewModel
 import ru.aol_panchenko.weatherapp.presentation.main_screen.WeatherListAdapter
@@ -48,6 +49,7 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner {
         _presenter = OneDayPresenter(this, _viewModel!!)
         btnRetry.setOnClickListener({ _presenter?.onRetryClick() })
         observeViewModel()
+        swipeLayout.onRefresh { _presenter?.onRefresh() }
     }
 
     private fun initRecyclerView() {
@@ -59,8 +61,8 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner {
 
     private fun observeViewModel() {
         _viewModel?.cityName?.observe(this, Observer {
-            it.let {
-                if (it?.isNotEmpty()!!) {
+            if (it != null) {
+                if (it.isNotEmpty()) {
                     _presenter?.onCityNameEntered(it)
                 }
             }
@@ -68,24 +70,39 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner {
     }
 
     override fun showErrorState(it: Throwable) {
-        changeState(errorVisibility = View.VISIBLE)
+        changeState(View.GONE, errorVisibility = View.VISIBLE)
     }
 
     override fun addWeather(weather: Weather) {
         _adapter?.addItem(weather)
     }
 
+    override fun setWeatherList(weathers: List<Weather>) {
+        _adapter?.setItems(weathers)
+        swipeLayout.isRefreshing = false
+    }
+
     override fun showProgressState() {
-        changeState(View.VISIBLE)
+        changeState(View.GONE, View.VISIBLE)
     }
 
     override fun showContentState() {
         changeState()
     }
 
-    private fun changeState(progressVisibility: Int = View.GONE, errorVisibility: Int = View.GONE) {
-        progressContainer?.visibility = progressVisibility
-        errorContainer?.visibility = errorVisibility
+    override fun showEmptyState() {
+        changeState(View.GONE, emptyVisibility = View.VISIBLE)
+    }
+
+    override fun clearList() {
+        _adapter?.clearList()
+    }
+
+    private fun changeState(rvVisibility: Int = View.VISIBLE, progressVisibility: Int = View.GONE, errorVisibility: Int = View.GONE, emptyVisibility: Int = View.GONE) {
+        rvWeatherList.visibility = rvVisibility
+        progressContainer.visibility = progressVisibility
+        errorContainer.visibility = errorVisibility
+        emptyContainer.visibility = emptyVisibility
     }
 
     override fun getLifecycle() = _registry

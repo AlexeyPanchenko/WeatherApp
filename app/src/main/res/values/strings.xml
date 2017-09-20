@@ -6,8 +6,8 @@
     <string name="add_city_title">Выбор города</string>
     <string name="add_city_button_save">Сохранить</string>
     <string name="add_city_button_cancel">Отмена</string>
-    <string name="error_text">Ошибка</string>
-    <string name="error_description">Извините, что то пошло не так</string>
+    <string name="error_title">Ошибка</string>
+    <string name="error_subtitle">Извините, что то пошло не так</string>
     <string name="button_retry_text">Повторить попытку</string>
     <string name="today_title">Сегодня</string>
     <string name="fie_days_title">5 дней</string>
@@ -23,4 +23,7 @@
     <string name="weather_description_230">Гроза с легкой моросью</string>
     <string name="weather_description_231">Гроза с моросью</string>
     <string name="weather_description_232">Гроза с сильной моросью</string>
+
+    <string name="empty_list_title">На данный момент список пуст</string>
+    <string name="empty_list_subtitle">Добавьте город, чтобы посмотреть погоду :)</string>
 </resources>

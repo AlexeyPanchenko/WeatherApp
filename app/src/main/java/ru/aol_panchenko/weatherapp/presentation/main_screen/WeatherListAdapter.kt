@@ -13,17 +13,26 @@ import ru.aol_panchenko.weatherapp.presentation.model.Weather
  */
 class WeatherListAdapter(private val _context: Context) : RecyclerView.Adapter<WeatherVH>() {
 
-    private var _weatherList: List<Weather> = ArrayList()
+    private var _weatherList = ArrayList<Weather>()
 
-    fun setItems(items: List<Weather>) {
-        _weatherList = items
+    fun setItems(items: List<Weather>?) {
+        if (items == null) {
+            _weatherList.clear()
+        } else {
+            _weatherList.addAll(items)
+        }
         notifyDataSetChanged()
     }
 
     fun addItem(item: Weather) {
         val position = itemCount
-        (_weatherList as ArrayList).add(item)
+        _weatherList.add(item)
         notifyItemInserted(position)
+    }
+
+    fun clearList() {
+        _weatherList.clear()
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): WeatherVH {
