@@ -3,8 +3,10 @@ package ru.aol_panchenko.weatherapp.di
 import dagger.Module
 import dagger.Provides
 import ru.aol_panchenko.weatherapp.WeatherApplication
+import ru.aol_panchenko.weatherapp.network.ApiWeather
 import ru.aol_panchenko.weatherapp.network.RetrofitBuilder
 import ru.aol_panchenko.weatherapp.repository.OneDayRepository
+import ru.aol_panchenko.weatherapp.repository.WeatherMapper
 import javax.inject.Singleton
 
 /**
@@ -23,5 +25,5 @@ class AppModule(private val application: WeatherApplication) {
 
     @Provides
     @Singleton
-    fun provideOneWeatherRepository() = OneDayRepository()
+    fun provideOneWeatherRepository(api: ApiWeather, mapper: WeatherMapper) = OneDayRepository(api, mapper)
 }

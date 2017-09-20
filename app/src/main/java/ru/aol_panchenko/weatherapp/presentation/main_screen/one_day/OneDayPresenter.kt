@@ -6,6 +6,7 @@ import io.reactivex.schedulers.Schedulers
 import ru.aol_panchenko.weatherapp.WeatherApplication
 import ru.aol_panchenko.weatherapp.network.model.one_day.WeatherOneDayResponse
 import ru.aol_panchenko.weatherapp.presentation.add_city.AddCityViewModel
+import ru.aol_panchenko.weatherapp.presentation.model.Weather
 import ru.aol_panchenko.weatherapp.repository.OneDayRepository
 import ru.aol_panchenko.weatherapp.utils.unsubscribe
 import javax.inject.Inject
@@ -21,21 +22,24 @@ class OneDayPresenter(private val _mvpView: OneDayMVPView, private val _viewMode
 
     init {
         WeatherApplication.appComponent.inject(this)
-        //loadCityWeather(_viewModel.cityName.value!!, _mvpView.getApiKey())
     }
 
-    fun loadCityWeather(cityName: String, apiKey: String) {
+    fun onCityNameEntered(cityName: String) {
+        loadCityWeather(cityName)
+    }
+
+    private fun loadCityWeather(cityName: String) {
         unsubscribe(_loadWeatherDisposable)
-        _loadWeatherDisposable = _repository.getWeatherOneDayByCityName(cityName, apiKey)
+        _loadWeatherDisposable = _repository.getWeatherOneDayByCityName(cityName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { _mvpView.showProgressState() }
                 .subscribe(this::onWeatherLoaded, {_mvpView.showErrorState(it) })
     }
 
-    private fun onWeatherLoaded(response: WeatherOneDayResponse) {
+    private fun onWeatherLoaded(weather: Weather) {
         _mvpView.showContentState()
-        _mvpView.addWeather(response)
+        _mvpView.addWeather(weather)
     }
 
     fun onDestroy() {

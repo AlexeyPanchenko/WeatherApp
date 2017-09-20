@@ -6,21 +6,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import ru.aol_panchenko.weatherapp.R
-import ru.aol_panchenko.weatherapp.network.model.one_day.WeatherOneDayResponse
+import ru.aol_panchenko.weatherapp.presentation.model.Weather
 
 /**
  * Created by Panchenko.AO on 19.09.2017.
  */
 class WeatherListAdapter(private val _context: Context) : RecyclerView.Adapter<WeatherVH>() {
 
-    private var _weatherList: List<WeatherOneDayResponse> = ArrayList()
+    private var _weatherList: List<Weather> = ArrayList()
 
-    fun setItems(items: List<WeatherOneDayResponse>) {
+    fun setItems(items: List<Weather>) {
         _weatherList = items
         notifyDataSetChanged()
     }
 
-    fun addItem(item: WeatherOneDayResponse) {
+    fun addItem(item: Weather) {
         val position = itemCount
         (_weatherList as ArrayList).add(item)
         notifyItemInserted(position)
@@ -33,10 +33,10 @@ class WeatherListAdapter(private val _context: Context) : RecyclerView.Adapter<W
 
     override fun onBindViewHolder(holder: WeatherVH?, position: Int) {
         val weather = _weatherList[position]
-        holder?.city?.text = "Владивосток"
-        holder?.description?.text = "${weather.weather?.description}"
-        holder?.readings?.text = "${weather.main?.temp}°C/${weather.main?.humidity}%"
-        Glide.with(_context).load("http://openweathermap.org/img/w/${weather.weather?.icon}.png").into(holder?.icon)
+        holder?.city?.text = weather.cityName
+        holder?.description?.text = weather.description
+        holder?.readings?.text = "${weather.temp}°C/${weather.humidity}%"
+        Glide.with(_context).load("http://openweathermap.org/img/w/${weather.icon}.png").into(holder?.icon)
     }
 
     override fun getItemCount() = _weatherList.size

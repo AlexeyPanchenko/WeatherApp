@@ -13,9 +13,9 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.error_state.*
 import kotlinx.android.synthetic.main.weather_list_fragment.*
 import ru.aol_panchenko.weatherapp.R
-import ru.aol_panchenko.weatherapp.network.model.one_day.WeatherOneDayResponse
 import ru.aol_panchenko.weatherapp.presentation.add_city.AddCityViewModel
 import ru.aol_panchenko.weatherapp.presentation.main_screen.WeatherListAdapter
+import ru.aol_panchenko.weatherapp.presentation.model.Weather
 import ru.aol_panchenko.weatherapp.utils.ui.SpacesItemDecoration
 
 /**
@@ -61,7 +61,7 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner {
         _viewModel?.cityName?.observe(this, Observer {
             it.let {
                 if (it?.isNotEmpty()!!) {
-                    _presenter?.loadCityWeather(it, getApiKey())
+                    _presenter?.onCityNameEntered(it)
                 }
             }
         })
@@ -71,8 +71,8 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner {
         changeState(errorVisibility = View.VISIBLE)
     }
 
-    override fun addWeather(response: WeatherOneDayResponse) {
-        _adapter?.addItem(response)
+    override fun addWeather(weather: Weather) {
+        _adapter?.addItem(weather)
     }
 
     override fun showProgressState() {
@@ -87,8 +87,6 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner {
         progressContainer?.visibility = progressVisibility
         errorContainer?.visibility = errorVisibility
     }
-
-    override fun getApiKey(): String = getString(R.string.weather_api_key)
 
     override fun getLifecycle() = _registry
 
