@@ -71,6 +71,7 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner {
 
     override fun showErrorState(it: Throwable) {
         changeState(View.GONE, errorVisibility = View.VISIBLE)
+        swipeLayout.isRefreshing = false
     }
 
     override fun addWeather(weather: Weather) {

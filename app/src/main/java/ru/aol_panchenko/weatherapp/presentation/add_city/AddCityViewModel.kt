@@ -12,9 +12,10 @@ class AddCityViewModel : ViewModel() {
     var cityName = MutableLiveData<String?>()
     var weathers = ArrayList<Weather>(0)
 
-
     fun reset() {
         cityName.value = null
         weathers.clear()
     }
+
+    fun cityIsNotEmpty() = cityName.value != null && cityName.value?.isNotEmpty()!!
 }

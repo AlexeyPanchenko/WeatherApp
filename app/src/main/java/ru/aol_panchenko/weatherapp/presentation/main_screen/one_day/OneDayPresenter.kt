@@ -1,5 +1,6 @@
 package ru.aol_panchenko.weatherapp.presentation.main_screen.one_day
 
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.toObservable
@@ -42,8 +43,8 @@ class OneDayPresenter(private val _mvpView: OneDayMVPView, private val _viewMode
     }
 
     private fun onWeatherLoaded(weather: Weather) {
-        _viewModel.cityName.value = null
         _viewModel.weathers.add(weather)
+        _viewModel.cityName.value = null
         initEmptyOrContentState()
         _mvpView.addWeather(weather)
     }
@@ -57,27 +58,37 @@ class OneDayPresenter(private val _mvpView: OneDayMVPView, private val _viewMode
     }
 
     fun onRefresh() {
-        if (_viewModel.weathers.isNotEmpty()) {
-            _mvpView.clearList()
-            _viewModel.weathers.toObservable()
-                    .map { it.cityName!! }
-                    .flatMap { _repository.getWeatherOneDayByCityName(it) }
-                    .subscribeOn(Schedulers.io())
-                    .toList()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess { reset(it) }
-                    .subscribe({ refreshWeatherLoaded(it) }, { _mvpView.showErrorState(it) })
-        } else _mvpView.setWeatherList(_viewModel.weathers)
+        when {
+            _viewModel.weathers.isNotEmpty() -> {
+                _mvpView.clearList()
+                val cities = arrayListOf<String>()
+                _viewModel.weathers.forEach { it.cityName?.let { it1 -> cities.add(it1) } }
+                if (_viewModel.cityIsNotEmpty() && !cities.contains(_viewModel.cityName.value)) {
+                    cities.add(_viewModel.cityName.value!!)
+                }
+                cities.toObservable()
+                        //.map { it.cityName!! }
+                        .flatMap { _repository.getWeatherOneDayByCityName(it) }
+                        .subscribeOn(Schedulers.io())
+                        .toList()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe { _mvpView.showProgressState() }
+                        .doOnSuccess { _viewModel.reset() }
+                        .subscribe({ refreshWeatherLoaded(it) }, { _mvpView.showErrorState(it) })
+            }
+            _viewModel.cityIsNotEmpty() -> loadCityWeather(_viewModel.cityName.value!!)
+            else -> _mvpView.setWeatherList(_viewModel.weathers)
+        }
     }
 
-    private fun refreshWeatherLoaded(it: List<Weather>) {
-        initEmptyOrContentState()
-        _mvpView.setWeatherList(it)
-    }
-
-    private fun reset(weathers: List<Weather>) {
-        _viewModel.reset()
+    private fun refreshWeatherLoaded(weathers: List<Weather>) {
         _viewModel.weathers.addAll(weathers)
+        initEmptyOrContentState()
+        _mvpView.setWeatherList(weathers)
+    }
+
+    private fun reset() {
+        _viewModel.reset()
     }
 
     fun onDestroy() {
