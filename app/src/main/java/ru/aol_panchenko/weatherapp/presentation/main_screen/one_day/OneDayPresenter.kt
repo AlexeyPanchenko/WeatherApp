@@ -1,5 +1,6 @@
 package ru.aol_panchenko.weatherapp.presentation.main_screen.one_day
 
+import android.util.Log
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -23,10 +24,18 @@ class OneDayPresenter(private val _mvpView: OneDayMVPView, private val _viewMode
 
     init {
         WeatherApplication.appComponent.inject(this)
+        _repository.getAll()
+                .doOnSubscribe { _mvpView.showProgressState() }
+                .subscribe({
+                    Log.d("TTT", "Weathers = $it")
+                    _mvpView.setWeatherList(it)
+                    _mvpView.showContentState()
+                }, {Log.d("TTT", "Error = $it")})
+
         if (_viewModel.weathers.isNotEmpty()) {
             _mvpView.setWeatherList(_viewModel.weathers)
         }
-        initEmptyOrContentState()
+        //initEmptyOrContentState()
     }
 
     fun onCityNameEntered(cityName: String) {
@@ -36,10 +45,12 @@ class OneDayPresenter(private val _mvpView: OneDayMVPView, private val _viewMode
     private fun loadCityWeather(cityName: String) {
         unsubscribe(_loadWeatherDisposable)
         _loadWeatherDisposable = _repository.getWeatherOneDayByCityName(cityName)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe { _mvpView.showProgressState() }
-                .subscribe(this::onWeatherLoaded, {_mvpView.showErrorState(it) })
+                .subscribe(this::onWeatherLoaded, {
+                    _mvpView.showErrorState(it)
+                    Log.d("TTT", "Error = $it")
+
+                })
     }
 
     private fun onWeatherLoaded(weather: Weather) {

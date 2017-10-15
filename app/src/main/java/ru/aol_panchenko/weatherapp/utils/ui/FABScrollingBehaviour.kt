@@ -14,22 +14,20 @@ import android.view.animation.LinearInterpolator
  */
 class FABScrollingBehaviour(context: Context, attrs: AttributeSet) : FloatingActionButton.Behavior() {
 
-    override fun onNestedScroll(coordinatorLayout: CoordinatorLayout?, child: FloatingActionButton?, target: View?, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed)
-
+    override fun onNestedScroll(coordinatorLayout: CoordinatorLayout, child: FloatingActionButton, target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int, type: Int) {
+        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type)
         if (dyConsumed > 0) {
-            val layoutParams = child?.layoutParams as CoordinatorLayout.LayoutParams
+            val layoutParams = child.layoutParams as CoordinatorLayout.LayoutParams
             val margin = layoutParams.bottomMargin
             child.animate()
                     .translationY(child.height.toFloat() + margin)
                     .setInterpolator(LinearInterpolator()).start()
         } else if (dyConsumed < 0) {
-            child?.animate()?.translationY(0F)?.setInterpolator(LinearInterpolator())?.start()
+            child.animate()?.translationY(0F)?.setInterpolator(LinearInterpolator())?.start()
         }
     }
 
-    override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout?, child: FloatingActionButton?, directTargetChild: View?, target: View?, axes: Int): Boolean =
+    override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, child: FloatingActionButton,
+                                     directTargetChild: View, target: View, axes: Int, type: Int): Boolean =
             axes == ViewCompat.SCROLL_AXIS_VERTICAL
-
-
 }
