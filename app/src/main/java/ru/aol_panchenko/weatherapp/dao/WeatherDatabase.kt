@@ -10,5 +10,5 @@ import ru.aol_panchenko.weatherapp.presentation.model.Weather
  */
 @Database(entities = arrayOf(Weather::class), version = 1)
 abstract class WeatherDatabase : RoomDatabase() {
-    abstract fun weatherDao(): WeatherDao
+    abstract fun weatherDao(): WeatherOneDayDao
 }

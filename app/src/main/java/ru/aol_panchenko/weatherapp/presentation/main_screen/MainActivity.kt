@@ -1,6 +1,7 @@
 package ru.aol_panchenko.weatherapp.presentation.main_screen
 
 import android.os.Bundle
+import android.support.v4.view.PagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
@@ -13,6 +14,7 @@ import ru.aol_panchenko.weatherapp.WeatherApplication
 import ru.aol_panchenko.weatherapp.network.ApiWeather
 import ru.aol_panchenko.weatherapp.network.model.one_day.WeatherOneDayResponse
 import ru.aol_panchenko.weatherapp.presentation.add_city.AddCityDialog
+import ru.aol_panchenko.weatherapp.presentation.main_screen.one_day.OneDayFragment
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +48,16 @@ class MainActivity : AppCompatActivity() {
         return if (id == R.id.action_settings) {
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        var listener: OnBackPressListener? = null
+        supportFragmentManager.fragments.forEach { if (it is OneDayFragment) listener = it }
+        if (listener != null)  {
+            listener?.onBackPress()
+        } else {
+            super.onBackPressed()
+        }
 
     }
 }

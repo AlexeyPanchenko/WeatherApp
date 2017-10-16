@@ -1,46 +1,19 @@
 package ru.aol_panchenko.weatherapp.presentation.model
 
 import android.arch.persistence.room.Entity
-import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
-import io.realm.RealmObject
 
 /**
  * Created by alexey on 20.09.17.
  */
 @Entity(tableName = "weathers_one_day")
-class Weather(){
-
-    var type: String? = null
-    var description: String? = null
-    var icon: String? = null
-    var temp: Double? = null
-    var minTemp: Double? = null
-    var maxTemp: Double? = null
-    var preassure: Int? = null
-    var humidity: Int? = null
-    var windSpeed: Double? = null
-    var windDirection: Double? = null
-    var cloudiness: Int? = null
-    var rainInThreeHours: Double? = null
-    var snowInThreeHours: Double? = null
-    @PrimaryKey
-    var cityName: String? = null
-
-    @Ignore
-    constructor(type: String?, description: String?,
-                        icon: String?, temp: Double?,
-                        minTemp: Double?, maxTemp: Double?,
-                        preassure: Int?, humidity: Int?,
-                        windSpeed: Double?,  windDirection: Double?,
-                        cloudiness: Int?, rainInThreeHours: Double?,
-                        snowInThreeHours: Double?, cityName: String?) : this() {
-        this.description = description
-        this.icon = icon
-        this.temp = temp
-        this.humidity = humidity
-        this.cityName = cityName
-    }
+class Weather constructor(val type: String?, val description: String?,
+                          val icon: String?, val temp: Double?,
+                          val minTemp: Double?, val maxTemp: Double?,
+                          val pressure: Int?, val humidity: Int?,
+                          val windSpeed: Double?,  val windDirection: Double?,
+                          val cloudiness: Int?, val rainInThreeHours: Double?,
+                          val snowInThreeHours: Double?, @PrimaryKey val cityName: String?) {
 
     class WeatherBuilder {
         private var type: String? = null

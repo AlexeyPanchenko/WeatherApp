@@ -2,10 +2,7 @@ package ru.aol_panchenko.weatherapp.di
 
 import dagger.Module
 import dagger.Provides
-import io.realm.Realm
-import ru.aol_panchenko.weatherapp.dao.WeatherDao
 import ru.aol_panchenko.weatherapp.dao.WeatherDatabase
-import ru.aol_panchenko.weatherapp.dao.WeatherOneDayDao
 import javax.inject.Singleton
 
 /**
@@ -13,10 +10,6 @@ import javax.inject.Singleton
  */
 @Module
 class DaoModule {
-
-    @Provides
-    @Singleton
-    fun provideWeatherOneDayDao(realm: Realm) = WeatherOneDayDao(realm)
 
     @Provides
     @Singleton

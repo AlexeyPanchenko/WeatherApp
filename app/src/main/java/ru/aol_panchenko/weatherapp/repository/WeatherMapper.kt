@@ -1,5 +1,7 @@
 package ru.aol_panchenko.weatherapp.repository
 
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import ru.aol_panchenko.weatherapp.network.model.one_day.WeatherOneDayResponse
 import ru.aol_panchenko.weatherapp.presentation.model.Weather
@@ -9,11 +11,11 @@ import ru.aol_panchenko.weatherapp.presentation.model.Weather
  */
 class WeatherMapper {
 
-    fun dtoToPresentation(response: WeatherOneDayResponse, cityName:String): Observable<Weather> {
-        return Observable.create<Weather> {
+    fun dtoToPresentation(response: WeatherOneDayResponse, cityName:String): Flowable<Weather> {
+        return Flowable.create<Weather> ({
            try {
                val weather = Weather.WeatherBuilder()
-                       .setCity(cityName)
+                       .setCity(cityName.toLowerCase())
                        .setType(response.weather?.type)
                        .setDescription(response.weather?.description)
                        .setIcon(response.weather?.icon)
@@ -33,6 +35,6 @@ class WeatherMapper {
            } catch (e: Exception) {
                it.onError(e)
            }
-        }
+        }, BackpressureStrategy.BUFFER)
     }
 }

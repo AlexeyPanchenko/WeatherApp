@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import ru.aol_panchenko.weatherapp.R
 import ru.aol_panchenko.weatherapp.presentation.model.Weather
+import ru.aol_panchenko.weatherapp.utils.firstLettersToUpperCase
 
 /**
  * Created by Panchenko.AO on 19.09.2017.
@@ -30,6 +31,11 @@ class WeatherListAdapter(private val _context: Context) : RecyclerView.Adapter<W
         notifyItemInserted(position)
     }
 
+    fun updateItem(weather: Weather, position: Int) {
+        _weatherList[position] = weather
+        notifyItemRangeChanged(position, 1)
+    }
+
     fun clearList() {
         _weatherList.clear()
         notifyDataSetChanged()
@@ -42,7 +48,7 @@ class WeatherListAdapter(private val _context: Context) : RecyclerView.Adapter<W
 
     override fun onBindViewHolder(holder: WeatherVH?, position: Int) {
         val weather = _weatherList[position]
-        holder?.city?.text = weather.cityName
+        holder?.city?.text = weather.cityName?.firstLettersToUpperCase()
         holder?.description?.text = weather.description
         holder?.readings?.text = "${weather.temp}°C/${weather.humidity}%"
         Glide.with(_context).load("http://openweathermap.org/img/w/${weather.icon}.png").into(holder?.icon)

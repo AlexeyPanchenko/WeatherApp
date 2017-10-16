@@ -1,42 +1,28 @@
 package ru.aol_panchenko.weatherapp.dao
 
-import android.content.Context
-import io.reactivex.BackpressureStrategy
+import android.arch.persistence.room.*
 import io.reactivex.Flowable
-import io.reactivex.FlowableOnSubscribe
-import io.reactivex.Observable
-import io.realm.Realm
-import ru.aol_panchenko.weatherapp.WeatherApplication
+import io.reactivex.Single
 import ru.aol_panchenko.weatherapp.presentation.model.Weather
-import javax.inject.Inject
-import io.realm.RealmConfiguration
-
-
 
 /**
- * Created by alexey on 15.10.17.
+ * Created by alexey on 16.10.17.
  */
-class WeatherOneDayDao @Inject constructor(val realm: Realm) {
+@Dao
+interface WeatherOneDayDao {
 
-   /* fun save(weather: Weather) {
-        realm.executeTransactionAsync { it.copyToRealmOrUpdate(weather) }
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun save(weather: Weather)
 
-    fun saveAll(weathers: List<Weather>) {
-        realm.beginTransaction()
-        realm.copyToRealmOrUpdate(weathers)
-        realm.commitTransaction()
-    }
+    @Delete
+    fun remove(weather: Weather)
 
-    fun getAll() = Flowable.create<List<Weather>>({ e ->
-        try {
-            e.onNext(realm.where(Weather::class.java).findAllAsync())
-            e.onComplete()
-        }catch (ex: Exception) {
-            e.onError(ex)
-        }}, BackpressureStrategy.BUFFER)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun saveAll(weathers: List<Weather>)
 
+    @Query("SELECT * FROM weathers_one_day")
+    fun getAll(): Flowable<List<Weather>>
 
-        fun findByCityName(cityName: String) =
-                realm.where(Weather::class.java).equalTo("cityName", cityName).findFirst()*/
+    @Query("SELECT * FROM weathers_one_day WHERE cityName LIKE :cityName")
+    fun findByCityName(cityName:String): Single<Weather>
 }

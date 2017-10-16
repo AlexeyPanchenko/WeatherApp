@@ -10,3 +10,7 @@ fun unsubscribe(subscription: Disposable?) {
         subscription.dispose()
     }
 }
+
+fun String.firstLettersToUpperCase() =
+        this.split(" ").map { it[0].toUpperCase().plus(it.substring(1)) }.toString()
+                .replace(Regex("[,\\[\\]]"), "").trim()

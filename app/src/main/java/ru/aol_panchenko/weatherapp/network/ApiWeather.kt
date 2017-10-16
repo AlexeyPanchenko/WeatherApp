@@ -1,5 +1,6 @@
 package ru.aol_panchenko.weatherapp.network
 
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,5 +15,5 @@ interface ApiWeather {
     fun getWeatherOneDayByCityName(
             @Query("q") cityName: String,
             @Query("units") units: String = "metric",
-            @Query("appid") apiKey: String): Observable<WeatherOneDayResponse>
+            @Query("appid") apiKey: String): Flowable<WeatherOneDayResponse>
 }
