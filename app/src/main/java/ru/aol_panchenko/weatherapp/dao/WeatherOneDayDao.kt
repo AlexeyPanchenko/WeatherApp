@@ -25,4 +25,7 @@ interface WeatherOneDayDao {
 
     @Query("SELECT * FROM weathers_one_day WHERE cityName LIKE :cityName")
     fun findByCityName(cityName:String): Single<Weather>
+
+    @Query("SELECT cityName FROM weathers_one_day")
+    fun getAllCity(): List<String>
 }

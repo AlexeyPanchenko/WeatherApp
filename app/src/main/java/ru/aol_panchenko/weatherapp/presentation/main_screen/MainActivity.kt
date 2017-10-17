@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         var listener: OnBackPressListener? = null
-        supportFragmentManager.fragments.forEach { if (it is OneDayFragment) listener = it }
+        supportFragmentManager.fragments.forEach { if (it is OnBackPressListener) listener = it }
         if (listener != null)  {
             listener?.onBackPress()
         } else {

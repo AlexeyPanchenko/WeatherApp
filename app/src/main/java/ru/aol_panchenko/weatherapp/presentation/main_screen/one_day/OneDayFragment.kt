@@ -89,7 +89,7 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner, OnBack
 
     private fun initSwipeLayout() {
         swipeLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE)
-        swipeLayout.onRefresh { _presenter?.onRefresh(true) }
+        swipeLayout.onRefresh { _presenter?.onRefresh() }
     }
 
     private fun initRecyclerView() {
@@ -120,7 +120,7 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner, OnBack
 
     override fun onBackPress() {
         if (errorContainer?.visibility == View.VISIBLE) {
-            changeState()
+            _presenter?.onBackPress()
         }
     }
 

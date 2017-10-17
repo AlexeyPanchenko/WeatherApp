@@ -1,8 +1,9 @@
 package ru.aol_panchenko.weatherapp.repository
 
-import io.reactivex.Flowable
-import io.reactivex.Observable
+import io.reactivex.*
 import io.reactivex.functions.Function
+import io.reactivex.rxkotlin.toFlowable
+import io.reactivex.schedulers.Schedulers
 import ru.aol_panchenko.weatherapp.API_KEY
 import ru.aol_panchenko.weatherapp.dao.WeatherOneDayDao
 import ru.aol_panchenko.weatherapp.network.ApiWeather
@@ -22,9 +23,12 @@ class OneDayRepository @Inject constructor(val api: ApiWeather, val weatherMappe
                 .doOnNext { dao.save(it) }
     }
 
-    fun updateWeathers() {
-
-    }
+    fun loadWeathers() = Flowable.create<List<Weather>>({ emitter ->
+        dao.getAllCity().toFlowable()
+                .flatMap { getWeatherOneDayByCityName(it) }
+                .toList()
+                .subscribe({completeList(emitter, it)}, {dao.getAll().subscribe({completeList(emitter, it)})})
+    }, BackpressureStrategy.BUFFER)
 
     fun getAll() = dao.getAll()
 
@@ -36,4 +40,9 @@ class OneDayRepository @Inject constructor(val api: ApiWeather, val weatherMappe
 
     private fun dtoWeatherToWeather(response: WeatherOneDayResponse, cityName: String) =
             weatherMapper.dtoToPresentation(response, cityName)
+
+    private fun completeList(emitter: FlowableEmitter<List<Weather>>, list: List<Weather>) {
+        emitter.onNext(list)
+        emitter.onComplete()
+    }
 }
