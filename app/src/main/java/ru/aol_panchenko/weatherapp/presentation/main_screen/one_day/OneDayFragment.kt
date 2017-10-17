@@ -8,9 +8,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import kotlinx.android.synthetic.main.error_state.*
 import kotlinx.android.synthetic.main.weather_list_fragment.*
 import org.jetbrains.anko.support.v4.onRefresh
@@ -37,11 +35,12 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner, OnBack
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.weather_list_fragment, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) =
+        inflater?.inflate(R.layout.weather_list_fragment, container, false)
+
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,6 +50,16 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner, OnBack
         btnRetry.setOnClickListener({ _presenter?.onRetryClick() })
         observeViewModel()
         initSwipeLayout()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId) {
+        R.id.menu_map -> true
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun showErrorState(it: Throwable) {

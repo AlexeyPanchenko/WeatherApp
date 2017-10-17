@@ -1,7 +1,7 @@
 <resources>
     <string name="weather_api_key">971366be56f3a2b5c4bdf4ac360b5b4d</string>
     <string name="app_name">WeatherApp</string>
-    <string name="action_settings">Settings</string>
+    <string name="menu_map_title">Map</string>
     <string name="add_city_hint">Укажите город</string>
     <string name="add_city_title">Выбор города</string>
     <string name="add_city_button_save">Сохранить</string>
