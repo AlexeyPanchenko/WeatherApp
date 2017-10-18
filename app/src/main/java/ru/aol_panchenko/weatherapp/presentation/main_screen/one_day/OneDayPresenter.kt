@@ -112,4 +112,8 @@ class OneDayPresenter(private val _mvpView: OneDayMVPView, private val _viewMode
             _mvpView.showContentState()
         }
     }
+
+    fun onMenuMapClick() {
+        _mvpView.openMap()
+    }
 }

@@ -14,4 +14,5 @@ interface OneDayMVPView {
     fun setWeatherList(weathers: List<Weather>)
     fun clearList()
     fun updateWeather(weather: Weather, position: Int)
+    fun openMap()
 }

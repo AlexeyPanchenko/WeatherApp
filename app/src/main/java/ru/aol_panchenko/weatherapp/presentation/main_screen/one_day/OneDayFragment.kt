@@ -12,10 +12,12 @@ import android.view.*
 import kotlinx.android.synthetic.main.error_state.*
 import kotlinx.android.synthetic.main.weather_list_fragment.*
 import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.startActivity
 import ru.aol_panchenko.weatherapp.R
 import ru.aol_panchenko.weatherapp.presentation.add_city.AddCityViewModel
 import ru.aol_panchenko.weatherapp.presentation.main_screen.OnBackPressListener
 import ru.aol_panchenko.weatherapp.presentation.main_screen.WeatherListAdapter
+import ru.aol_panchenko.weatherapp.presentation.map_screen.MapActivity
 import ru.aol_panchenko.weatherapp.presentation.model.Weather
 import ru.aol_panchenko.weatherapp.utils.ui.SpacesItemDecoration
 
@@ -58,7 +60,10 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner, OnBack
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId) {
-        R.id.menu_map -> true
+        R.id.menu_map -> {
+            _presenter?.onMenuMapClick()
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -94,6 +99,10 @@ class OneDayFragment : Fragment(), OneDayMVPView, LifecycleRegistryOwner, OnBack
 
     override fun clearList() {
         _adapter?.clearList()
+    }
+
+    override fun openMap() {
+        startActivity<MapActivity>()
     }
 
     private fun initSwipeLayout() {

@@ -86,6 +86,8 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:$arch_version"
     compile "android.arch.persistence.room:rxjava2:$arch_version"
 
+    /** Maps **/
+    compile 'com.google.android.gms:play-services-maps:11.4.2'
 }
 
 repositories {
