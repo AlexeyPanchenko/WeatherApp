@@ -109,6 +109,8 @@ class MapActivity : AppCompatActivity(), MapMVPView,
         } else {
             AlertDialog.Builder(this)
                     .setMessage("Для определения текущего местоположения необходимо включить геолокацию")
+                    .setPositiveButton("Включить", { _,_ -> startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
+                    .setNegativeButton("Отмена", { dialog,_ -> dialog.dismiss() })
                     .create()
                     .show()
         }
