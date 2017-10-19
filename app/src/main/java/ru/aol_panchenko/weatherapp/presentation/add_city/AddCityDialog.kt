@@ -39,10 +39,10 @@ class AddCityDialog : DialogFragment(), AddCityMVPView {
 
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(getString(R.string.add_city_title))
-                .setPositiveButton(getString(R.string.add_city_button_save),{ _, _ ->
+                .setPositiveButton(getString(R.string.button_save),{ _, _ ->
                     _presenter?.onSaveClick()
                 })
-                .setNegativeButton(getString(R.string.add_city_button_cancel), { _, _ ->
+                .setNegativeButton(getString(R.string.button_cancel), { _, _ ->
                     _presenter?.onCancelClick()
                 })
                 .setView(customView)

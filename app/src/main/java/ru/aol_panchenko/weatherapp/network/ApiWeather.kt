@@ -20,8 +20,8 @@ interface ApiWeather {
 
     @GET("weather")
     fun getWeatherOneDayByGeo(
-            @Query("lat") lat: String,
-            @Query("lon") lon: String,
+            @Query("lat") lat: Double,
+            @Query("lon") lon: Double,
             @Query("units") units: String = "metric",
             @Query("appid") apiKey: String = API_KEY): Flowable<WeatherOneDayResponse>
 }

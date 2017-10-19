@@ -18,8 +18,14 @@ class OneDayRepository @Inject constructor(val api: ApiWeather, val weatherMappe
                                            val dao: WeatherOneDayDao) {
 
     fun getWeatherOneDayByCityName(cityName: String): Flowable<Weather> {
-        return api.getWeatherOneDayByCityName(cityName, apiKey = API_KEY)
+        return api.getWeatherOneDayByCityName(cityName)
                 .flatMap { dtoWeatherToWeather(it, cityName) }
+                .doOnNext { dao.save(it) }
+    }
+
+    fun getWeatherOneDayByGeo(lat: Double, lon: Double): Flowable<Weather> {
+        return api.getWeatherOneDayByGeo(lat, lon)
+                .flatMap { dtoWeatherToWeather(it, it.cityName) }
                 .doOnNext { dao.save(it) }
     }
 

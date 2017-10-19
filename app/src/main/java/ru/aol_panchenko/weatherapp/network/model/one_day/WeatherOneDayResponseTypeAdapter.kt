@@ -16,6 +16,7 @@ class WeatherOneDayResponseTypeAdapter : JsonDeserializer<WeatherOneDayResponse>
     private val JSON_RAIN = "rain"
     private val JSON_SNOW = "snow"
     private val JSON_CODE = "cod"
+    private val JSON_CITY_NAME = "name"
 
     override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): WeatherOneDayResponse {
         val responseObj = json?.asJsonObject
@@ -28,8 +29,9 @@ class WeatherOneDayResponseTypeAdapter : JsonDeserializer<WeatherOneDayResponse>
         val rain = extractObjectFromJsonObject<RainResponse>(responseObj.getAsJsonObject(JSON_RAIN))
         val snow = extractObjectFromJsonObject<SnowResponse>(responseObj.getAsJsonObject(JSON_SNOW))
         val code = responseObj.getAsJsonPrimitive(JSON_CODE).asInt
+        val name = responseObj.getAsJsonPrimitive(JSON_CITY_NAME).asString
 
-        return WeatherOneDayResponse(coord, weather, main, wind, clouds, rain, snow, code)
+        return WeatherOneDayResponse(coord, weather, main, wind, clouds, rain, snow, code, name)
     }
 
     private inline fun <reified T> extractObjectFromJsonObject(json: JsonElement?) =

@@ -1,12 +1,16 @@
 <resources>
     <string name="weather_api_key">971366be56f3a2b5c4bdf4ac360b5b4d</string>
     <string name="google_maps_api_key">AIzaSyClRjLPPWGg7gj9pKK3Lsv1ysVn2Q-3Gyc</string>
+
+    <string name="button_save">Сохранить</string>
+    <string name="button_cancel">Отмена</string>
+    <string name="button_turn_on">Включить</string>
+    <string name="button_choose">Выбрать</string>
+
     <string name="app_name">WeatherApp</string>
     <string name="menu_map_title">Map</string>
     <string name="add_city_hint">Укажите город</string>
     <string name="add_city_title">Выбор города</string>
-    <string name="add_city_button_save">Сохранить</string>
-    <string name="add_city_button_cancel">Отмена</string>
     <string name="error_title">Ошибка</string>
     <string name="error_subtitle">Извините, что то пошло не так</string>
     <string name="button_retry_text">Повторить попытку</string>
@@ -27,4 +31,12 @@
 
     <string name="empty_list_title">На данный момент список пуст</string>
     <string name="empty_list_subtitle">Добавьте город, чтобы посмотреть погоду :)</string>
+
+    <string name="map_marker_title">Погода</string>
+    <string name="map_dialog_title">Геолокация</string>
+    <string name="map_dialog_explanation_settings_permission">Для определения текущего местоположения необходимо включить разрешение на геолокацию в настройках приложения</string>
+    <string name="map_toast_permission_not_allowed">Геолокация недоступна</string>
+    <string name="map_dialog_proposal_turn_on_gps">Для определения текущего местоположения необходимо включить геолокацию</string>
+    <string name="map_dialog_choose_place_title">Выбор местности</string>
+
 </resources>
